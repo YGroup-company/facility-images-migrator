@@ -16,7 +16,9 @@ const pgClient = new Client({
   database: process.env.PG_DATABASE,
   user: process.env.PG_DB_USER,
   password: process.env.PG_DB_PASSWORD,
-  ssl: true,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 await pgClient.connect();
 console.log("\x1b[33m%s\x1b[0m", `PG_HOST: ${process.env.PG_HOST}`);

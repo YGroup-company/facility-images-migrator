@@ -1,3 +1,5 @@
+console.log("\x1b[33m%s\x1b[0m", "STARTING SCRIPT");
+
 import https from "https";
 import pkg from "pg";
 const { Client } = pkg;
@@ -7,14 +9,16 @@ import { v4 as uuidv4 } from "uuid";
 import dotenv from "dotenv";
 dotenv.config();
 
+console.log("\x1b[33m%s\x1b[0m", `PG_HOST: ${process.env.PG_HOST}`);
 const pgClient = new Client({
   host: process.env.PG_HOST,
   port: process.env.PG_PORT,
-  database: process.env.DATABASE,
+  database: process.env.PG_DATABASE,
   user: process.env.PG_DB_USER,
   password: process.env.PG_DB_PASSWORD,
 });
 await pgClient.connect();
+console.log("\x1b[33m%s\x1b[0m", `PG_HOST: ${process.env.PG_HOST}`);
 
 await pgClient.query(
   `CREATE TABLE IF NOT EXISTS images_to_process (

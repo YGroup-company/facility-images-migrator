@@ -88,9 +88,6 @@ for (const imageUrl of imageUrls) {
   console.log("ended downloading");
 }
 
-await pgClient.query("DROP TABLE images_to_process;");
-console.log("\x1b[33m TEMPORARY TABLE DROPED \x1b[0m");
-
 console.log("\x1b[33m FINISHED \x1b[0m");
 
 await pgClient.end();

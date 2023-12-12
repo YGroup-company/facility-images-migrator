@@ -43,13 +43,25 @@ const s3 = new S3Client({
 const json = await readFile("./posts.json", "utf8");
 const { data } = JSON.parse(json);
 
+const alreadyProcessed = await readFile("./image-url-to-s3-key-object.json", "utf8");
+const alreadyProcessedObject = JSON.parse(alreadyProcessed);
+
+const alreadyProcessedUrls = Object.keys(alreadyProcessedObject);
+
 let imageUrls = [];
 for (const post of Object.values(data)) {
   const { list_images } = post;
   if (list_images) {
-    imageUrls = imageUrls.concat(list_images);
+    for (const imageUrl of list_images) {
+      if (alreadyProcessedUrls.includes(imageUrl)) {
+        continue;
+      }
+      imageUrls.push(imageUrl);
+    }
   }
 }
+
+console.log(imageUrls.length);
 
 let httpsGetPromise = function (src) {
   return new Promise((resolve, reject) => {

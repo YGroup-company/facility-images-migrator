@@ -20,9 +20,7 @@ await pgClient.connect();
 
 let imageUrlToKeyObject = {};
 
-const records = await pgClient.query("SELECT image_url, image_key FROM images_to_process WHERE image_url = $1", [
-  imageUrl,
-]);
+const records = await pgClient.query("SELECT image_url, image_key FROM images_to_process");
 
 for (const { image_url, image_key } of records.rows) {
   imageUrlToKeyObject[image_url] = image_key;
